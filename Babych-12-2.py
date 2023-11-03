@@ -5,28 +5,19 @@
 exists_dict = {'key': 'bar'}
 
 def catch_errors(func):
-    def wrapper(*args, **kwargs):
+    def wrapper(data):
         try:
-            func(*args, **kwargs)
-        except KeyError as error1:
-            print(error1)
-        except ValueError as error2:
-            print(error2)
-        except TypeError as error3:
-            print(error3)
-        except Exception:
-            print('another error')
+            func(data)
+        except Exception as e:
+            print(f'An error occurred during execution of your function: {e}')
     return wrapper
 
 @catch_errors
 def some_function_with_risky_operation(data: dict):
     k = list(data.keys())[0]
-    if k in exists_dict:
-        print(exists_dict.get(k))
-    else:
-        print(f'KeyError no such key as {k}')
+    print(exists_dict.get(k))
+
 
 
 some_function_with_risky_operation({'foo': 'bar'})
-
 some_function_with_risky_operation({'key': 'bar'})
